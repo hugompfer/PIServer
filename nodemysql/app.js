@@ -1,27 +1,11 @@
 const express = require('express');
-const mysql = require('mysql');
-
-// Create connection
-const db = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'mysql1234',
-    database : 'GhostRace',
-    port    : '3306'
-}); 
-
-// Connect
-db.connect((err) => {
-    if(err){
-        throw err;
-    }
-    console.log('MySql Connected...');
-});
-
 const app = express();
+const usersRoutes=require('./api/routes/users');
 
+app.use('/users',usersRoutes);
+
+/*
 app.get("/",(req,res)=> res.send("ligado"));
-
 app.get('/:table/:id', (req, res) => {
     let table=`${req.params.table}`.charAt(0).toUpperCase()+`${req.params.table}`.slice(1);
     let first='SELECT * FROM '+table+' WHERE id'+table+' = ';
@@ -42,14 +26,13 @@ app.get('/:table', (req, res) => {
         res.send(result);
     });
 });
-
-
+*/
 
 app.listen('8000', () => {
     console.log('Server started on port 3000');
 });
 
-
+module.exports=app;
 /*
 // Insert post 1
 app.get('/addpost1', (req, res) => {
