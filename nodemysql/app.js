@@ -1,8 +1,6 @@
-const express = require('express');
-const app = express();
-const usersRoutes=require('./api/routes/users');
-
-app.use('/users',usersRoutes);
+var server = require('./api/server');
+var httpServer = new server.Server();
+httpServer.listen();
 
 /*
 app.get("/",(req,res)=> res.send("ligado"));
@@ -28,11 +26,8 @@ app.get('/:table', (req, res) => {
 });
 */
 
-app.listen('8000', () => {
-    console.log('Server started on port 3000');
-});
 
-module.exports=app;
+
 /*
 // Insert post 1
 app.get('/addpost1', (req, res) => {
