@@ -6,7 +6,7 @@ const db = require('../db/dbConnector');
 router.get('/', (req, res) => {
     let sql='SELECT * FROM Utilizador';
     let query = db.query(sql, (err, result) => {
-        if(err) throw err;
+        if(err) throw res.json({success: false, message: err});;
         console.log(result[0].idUtilizador);
         res.json({success: true, message: result});
     });
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     let sql=`SELECT * FROM Utilizador where idUtilizador=${req.params.id}`;
     let query = db.query(sql, (err, result) => {
-        if(err) throw err;
+        if(err) throw res.json({success: false, message: "user not found"});;
         console.log(result[0].idUtilizador);
         res.json({success: true, message: result});
     });

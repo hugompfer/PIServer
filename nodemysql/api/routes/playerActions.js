@@ -5,12 +5,16 @@ const db = require('../db/dbConnector');
 
 
 router.post('/', (req, res) => {
-    console.log('insert into AçaoJogador(açao,tempoAtual,idSessao) values("'+
-    req.body.action+'",'+req.body.timestamp+','+req.body.sectionID+')');
-    let sql='insert into AçaoJogador(açao,tempoAtual,idSessao) values("'+
-    req.body.action+'","'+req.body.timestamp+'",'+req.body.sectionID+')';
+    console.log(req.body.action);
+    console.log(req.body.timestamp);
+    console.log(req.body.anteriorExecucao);
+    console.log(req.body.sectionID);
+    console.log('insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao) values("'+
+    req.body.action+'",'+parseFloat(req.body.timestamp)+','+parseInt(req.body.anteriorExecucao)+','+parseInt(req.body.sectionID)+')');
+    let sql='insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao) values("'+
+    req.body.action+'",'+parseFloat(req.body.timestamp)+','+parseInt(req.body.anteriorExecucao)+','+parseInt(req.body.sectionID)+')';
     let query = db.query(sql, (err, result) => {
-        if(err) throw err;
+        if(err) throw res.json({success: false, message: err});
         res.json({success: true, message: result["insertId"]});
     });
 });
@@ -19,7 +23,7 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
     let sql=`SELECT * FROM AçaoJogador where idSessao=${req.params.id}`;
     let query = db.query(sql, (err, result) => {
-        if(err) throw err;
+        if(err) throw res.json({success: false, message: "session not found"});;
         res.json({success: true, message: result});
     });
 });
