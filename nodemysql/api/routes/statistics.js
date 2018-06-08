@@ -10,7 +10,7 @@ router.post('/', (req, res) => {
     let sql='insert into estatistica(valor,idTipoEstatistica,idSessao) values("'+
     req.body.value+'",'+req.body.statisticTypeID+','+req.body.sessionID+')';
     let query = db.query(sql, (err, result) => {
-        if(err) throw err;
+        if(err) throw res.json({success: false, message: err});;
         res.json({success: true, message: result["insertId"]});
     });
 });
@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
     let sql=`SELECT * FROM estatistica where idSessao=${req.params.id}`;
     let query = db.query(sql, (err, result) => {
-        if(err) throw err;
+        if(err) throw res.json({success: false, message: err});;
         res.json({success: true, message: result});
     });
 });
